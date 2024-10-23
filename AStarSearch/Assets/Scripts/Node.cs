@@ -14,6 +14,7 @@ public class Node : MonoBehaviour
     }
 
     void OnDrawGizmos(){
+        //Draw the node connections
         foreach(GameObject neighbor in neighbors){
             Gizmos.DrawLine(transform.position, neighbor.transform.position);
         }
@@ -22,6 +23,10 @@ public class Node : MonoBehaviour
     void Update(){
 
     }
+    /// <summary>
+    /// This is the getter for the heuristic value of the node. The Euclidean Distance is used for this.
+    /// </summary>
+    /// <returns>The Euclidean distance to the goal</returns>
     public float GetHeuristic(){
         return heuristic;
     }

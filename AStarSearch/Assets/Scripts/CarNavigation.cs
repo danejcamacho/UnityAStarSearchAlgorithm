@@ -26,10 +26,15 @@ public class CarNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //gets a random index in neighbors and randomly travels to nodes (for debug purposes)
         int randIdx = Random.Range(0, currNode.GetComponent<Node>().neighbors.Length);
         ChangeNode(currNode.GetComponent<Node>().neighbors[randIdx]);
     }
 
+    /// <summary>
+    /// This function will move the car to the specified node
+    /// </summary>
+    /// <param name="nodeToTravelTo"></param>
     public void ChangeNode(GameObject nodeToTravelTo){
         if(!carIsMoving){
             StartCoroutine(TravelToNode(nodeToTravelTo));
