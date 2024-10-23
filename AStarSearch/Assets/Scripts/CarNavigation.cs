@@ -26,9 +26,8 @@ public class CarNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            ChangeNode(debugNodeForTesting);
-        }
+        int randIdx = Random.Range(0, currNode.GetComponent<Node>().neighbors.Length);
+        ChangeNode(currNode.GetComponent<Node>().neighbors[randIdx]);
     }
 
     public void ChangeNode(GameObject nodeToTravelTo){
@@ -38,7 +37,7 @@ public class CarNavigation : MonoBehaviour
     }
 
     private IEnumerator TravelToNode(GameObject nodeToTravelTo){
-
+        carIsMoving = true;
 	    float time = 0;
         while (time < 1 ){
             time += Time.deltaTime * carSpeed;
@@ -47,6 +46,7 @@ public class CarNavigation : MonoBehaviour
         }
 
         currNode = nodeToTravelTo;
+        carIsMoving = false;
 	
     }
 }

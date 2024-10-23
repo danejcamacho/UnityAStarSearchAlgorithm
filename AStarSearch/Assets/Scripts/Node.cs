@@ -2,15 +2,27 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    private float heuristic;
+    public GameObject goalNode;
+    public GameObject[] neighbors;
+
+    private void Awake(){
+        heuristic = Vector3.Distance(goalNode.transform.position, transform.position);
+    }
+    void Start(){
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void OnDrawGizmos(){
+        foreach(GameObject neighbor in neighbors){
+            Gizmos.DrawLine(transform.position, neighbor.transform.position);
+        }
+    }
+
+    void Update(){
+
+    }
+    public float GetHeuristic(){
+        return heuristic;
     }
 }
