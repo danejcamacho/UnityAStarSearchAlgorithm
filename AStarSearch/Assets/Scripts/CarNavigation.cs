@@ -7,14 +7,14 @@ using UnityEngine;
 public class CarNavigation : MonoBehaviour
 {
     public GameObject navNodes;
-    [SerializeField] private float carSpeed = 1;
+    [SerializeField] private float carSpeed = 5;
     private GameObject currNode;
     private GameObject startNode;
     public GameObject debugNodeForTesting;
     private bool carIsMoving = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {   
         startNode = GameObject.FindWithTag("Start");
         currNode = startNode;
@@ -27,7 +27,7 @@ public class CarNavigation : MonoBehaviour
     void Update()
     {
         //gets a random index in neighbors and randomly travels to nodes (for debug purposes)
-        int randIdx = Random.Range(0, currNode.GetComponent<Node>().neighbors.Length);
+        int randIdx = Random.Range(0, currNode.GetComponent<Node>().neighbors.Count);
         ChangeNode(currNode.GetComponent<Node>().neighbors[randIdx]);
     }
 

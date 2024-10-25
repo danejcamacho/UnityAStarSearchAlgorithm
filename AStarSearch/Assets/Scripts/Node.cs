@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Node : MonoBehaviour
 {
     private float heuristic;
     public GameObject goalNode;
-    public GameObject[] neighbors;
+    public List<GameObject> neighbors;
 
     private void Awake(){
         heuristic = Vector3.Distance(goalNode.transform.position, transform.position);
