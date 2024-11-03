@@ -6,6 +6,7 @@ public class Node : MonoBehaviour
     private float heuristic;
     public GameObject goalNode;
     public List<GameObject> neighbors;
+    public float costToTravelToNode = 1;
 
     private void Awake(){
         heuristic = Vector3.Distance(goalNode.transform.position, transform.position);

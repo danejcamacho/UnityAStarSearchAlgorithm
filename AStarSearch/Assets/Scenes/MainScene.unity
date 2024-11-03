@@ -303,8 +303,8 @@ MonoBehaviour:
   nodePrefab: {fileID: 4624302445809150693, guid: b641b7f6dfc1d45c4a13a68981d3433f, type: 3}
   goalNodePrefab: {fileID: 3318136440285407938, guid: 8707b9092962d420299a93abe5590837, type: 3}
   startNodePrefab: {fileID: 7488811146278442304, guid: 48887ac0533e344f28ae69f619a72190, type: 3}
-  width: 10
-  height: 10
+  width: 15
+  height: 15
 --- !u!1 &283636787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,6 +1335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2069394943}
   - component: {fileID: 2069394944}
+  - component: {fileID: 2069394945}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -1374,6 +1375,19 @@ MonoBehaviour:
   navNodes: {fileID: 260200434}
   carSpeed: 5
   debugNodeForTesting: {fileID: 0}
+--- !u!114 &2069394945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069394939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215cf3a87ebe347c096f7143dd20a4bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carNavigation: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
