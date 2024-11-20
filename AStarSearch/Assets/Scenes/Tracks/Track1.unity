@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 25000
-  breakingForce: 300
-  maxTurnAngle: 15
+  breakingForce: 10000
+  maxTurnAngle: 30
 --- !u!1001 &183789943
 PrefabInstance:
   m_ObjectHideFlags: 0
