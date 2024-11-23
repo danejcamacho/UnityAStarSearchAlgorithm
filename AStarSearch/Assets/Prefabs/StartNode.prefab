@@ -121,5 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6020398e08858e42a865ae10dbbfff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalNode: {fileID: 0}
+  goalNode: {fileID: 7488811146278442304}
   neighbors: []
+  costToTravelToNode: 1

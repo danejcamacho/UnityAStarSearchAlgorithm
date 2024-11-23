@@ -36,7 +36,7 @@ public class GridManager : MonoBehaviour
                 }
 
                 currNode.name = "Node_" + x + "_" + y;
-                currNode.GetComponent<Node>().goalNode = GameObject.FindWithTag("Goal");
+                
                 
             }
         }       
@@ -79,6 +79,9 @@ public class GridManager : MonoBehaviour
                         currNode.GetComponent<Node>().neighbors.Add(nodeLeft);
                     }               
                 }
+
+                //set goal
+                currNode.GetComponent<Node>().goalNode = GameObject.FindWithTag("Goal");
             }
         }        
     }

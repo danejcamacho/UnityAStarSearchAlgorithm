@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Node : MonoBehaviour
@@ -12,7 +13,8 @@ public class Node : MonoBehaviour
         heuristic = Vector3.Distance(goalNode.transform.position, transform.position);
     }
     void Start(){
-
+        //initialize to avoid error
+        goalNode = gameObject;
     }
 
     void OnDrawGizmos(){
