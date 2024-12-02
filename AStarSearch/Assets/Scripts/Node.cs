@@ -34,4 +34,8 @@ public class Node : MonoBehaviour
     public float GetHeuristic(){
         return heuristic;
     }
+
+    public float GetCost(){
+        return costToTravelToNode;
+    }
 }

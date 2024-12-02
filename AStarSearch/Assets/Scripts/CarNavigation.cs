@@ -43,25 +43,62 @@ public class CarNavigation : MonoBehaviour
         carIsSearching = true;
         currNode = startNode;
         //add the start node to the open list
-        openList.Add(currNode, 0 + currNode.GetComponent<Node>().GetHeuristic());
+        openList.Add(currNode, 0);
         while(openList.Count > 0){
+            // Debug.Log("Current Node: " + currNode);
+            // Debug.Log("OPEN LIST: ");
+            // foreach(KeyValuePair<GameObject, float> node in openList){
+            //     Debug.Log(node.Key + " " + node.Value);
+            // }
+            // Debug.Log("CLOSED LIST: ");
+            // foreach(GameObject node in closedList){
+            //     Debug.Log(node);
+            // }
+
             //add all the neighbors of the current node to the open list
             //    if the neighbor is not in the closed list
             //    if the neighbor is in the neighbor list, update the cost if it is less
+            foreach(GameObject neighbor in currNode.GetComponent<Node>().neighbors) {
+                Debug.Log("Neighbor: " + neighbor);
+                if(!closedList.Contains(neighbor)){
+                    if(openList.ContainsKey(neighbor)){
+                        if(openList[neighbor] > openList[currNode] + currNode.GetComponent<Node>().GetCost()){
+                            openList[neighbor] = openList[currNode] + currNode.GetComponent<Node>().GetCost();
+                        }
+                    } else {
+                        openList.Add(neighbor, neighbor.GetComponent<Node>().GetCost() + currNode.GetComponent<Node>().GetCost() + neighbor.GetComponent<Node>().GetHeuristic());
+                    }
+                }
+            }
             
-
-
             //get lowest cost node in the open list,
             //   add it to the closed list,
             //   remove it from the open list
             //   set the current node to the lowest cost node
-            //   use ChangeNode() to move the car to the current node (maybe use await?)
-            
-            //if the current node is the goal node, break
+            float lowestCost = float.MaxValue;
+            GameObject lowestCostNode = null;
+            foreach(KeyValuePair<GameObject, float> node in openList){
+                if(node.Value < lowestCost){
+                    lowestCost = node.Value;
+                    lowestCostNode = node.Key;
+                }
+            }
 
-            //
+            if (lowestCostNode != null) {
+                closedList.Add(lowestCostNode);
+                openList.Remove(lowestCostNode);
+                currNode = lowestCostNode;
+            }
+
+            // Check if the current node is the goal node
+            if (currNode.CompareTag("Goal")){ {
+                Debug.Log("Goal reached!");
+                break;
+            }
         }
         carIsSearching = false;
+        }
+        Debug.Log("Broke Prematurely");
     }
 
 

@@ -9,11 +9,11 @@ public class GridManager : MonoBehaviour
     private GameObject currNode;
     public int width = 10;
     public int height = 10;
-    private float cellSize = 5f;
+    public float cellSize = 5f;
 
     private int[,] gridArray;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
 
         gridArray = new int[width, height];
