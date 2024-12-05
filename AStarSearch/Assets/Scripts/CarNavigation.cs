@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,7 +9,9 @@ public class CarNavigation : MonoBehaviour
 {
     public GameObject navNodes;
     [SerializeField] private float carSpeed = 5;
-    private GameObject currNode;
+    private GameObject currNode; // this is for the A* algorithm
+
+    private GameObject currentNode; // this is for lerping
     private GameObject startNode;
     private bool carIsMoving = false;
     private bool carIsSearching = false;
@@ -20,23 +23,38 @@ public class CarNavigation : MonoBehaviour
     //Dict of nodes that have been visited + the cost to get there + heuristic
     Dictionary<GameObject, float> openList = new Dictionary<GameObject, float>();
 
+
+    int navIdx = 0;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
         startNode = GameObject.FindWithTag("Start");
         currNode = startNode;
-        transform.position = currNode.transform.position;
+        currentNode = startNode;
+        transform.position = startNode.transform.position;
         carIsMoving = false;
-        Debug.Log(startNode);
+        AStarSearch();
 
+        for (int i = 0; i < closedList.Count; i++){
+            Debug.Log("Closed List: "+ i + " " + closedList[i]);
+        }
 
         
     }
 
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space) && !carIsSearching){
-            AStarSearch();
+
+        if(Input.GetKeyDown(KeyCode.Z)){
+            Debug.Log("navIdx: " + navIdx);
+            navIdx++;
+            ChangeNode(closedList[navIdx]);
         }
+
+
+
+
     }
 
     private void AStarSearch(){
@@ -54,12 +72,15 @@ public class CarNavigation : MonoBehaviour
             // foreach(GameObject node in closedList){
             //     Debug.Log(node);
             // }
+            //Debug.Log("Ran");
+            closedList.Add(currNode);
+            openList.Remove(currNode);
 
             //add all the neighbors of the current node to the open list
             //    if the neighbor is not in the closed list
             //    if the neighbor is in the neighbor list, update the cost if it is less
             foreach(GameObject neighbor in currNode.GetComponent<Node>().neighbors) {
-                Debug.Log("Neighbor: " + neighbor);
+                //Debug.Log("Neighbor: " + neighbor);
                 if(!closedList.Contains(neighbor)){
                     if(openList.ContainsKey(neighbor)){
                         if(openList[neighbor] > openList[currNode] + currNode.GetComponent<Node>().GetCost()){
@@ -70,6 +91,7 @@ public class CarNavigation : MonoBehaviour
                     }
                 }
             }
+            Debug.Log("Got past adding neighbors");
             
             //get lowest cost node in the open list,
             //   add it to the closed list,
@@ -84,11 +106,16 @@ public class CarNavigation : MonoBehaviour
                 }
             }
 
+            //Debug.Log("Lowest Cost Node: " + lowestCostNode);
+
             if (lowestCostNode != null) {
                 closedList.Add(lowestCostNode);
                 openList.Remove(lowestCostNode);
                 currNode = lowestCostNode;
+
+
             }
+
 
             // Check if the current node is the goal node
             if (currNode.CompareTag("Goal")){ {
@@ -98,7 +125,9 @@ public class CarNavigation : MonoBehaviour
         }
         carIsSearching = false;
         }
-        Debug.Log("Broke Prematurely");
+
+
+
     }
 
 
@@ -117,11 +146,11 @@ public class CarNavigation : MonoBehaviour
 	    float time = 0;
         while (time < 1 ){
             time += Time.deltaTime * carSpeed;
-            transform.position = Vector3.Lerp(currNode.transform.position, nodeToTravelTo.transform.position, time);
+            transform.position = Vector3.Lerp(currentNode.transform.position, nodeToTravelTo.transform.position, time);
             yield return null;
         }
 
-        currNode = nodeToTravelTo;
+        currentNode = nodeToTravelTo;
         carIsMoving = false;
 	
     }
