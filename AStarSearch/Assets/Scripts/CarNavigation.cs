@@ -83,10 +83,10 @@ public class CarNavigation : MonoBehaviour
             foreach(GameObject neighbor in currNode.GetComponent<Node>().neighbors) {
                 Debug.Log("Neighbor: " + neighbor);
                 if(!closedList.Contains(neighbor)){
-                    // if(openList.ContainsKey(neighbor)){
-                    if(openList.ContainsKey(currNode)){
-                        if(openList[neighbor] > openList[currNode] + currNode.GetComponent<Node>().GetCost()){ // curr node not in open list
-                            openList[neighbor] = openList[currNode] + currNode.GetComponent<Node>().GetCost();
+                    if(openList.ContainsKey(neighbor)){
+                    // if(openList.ContainsKey(currNode)){
+                        if(openList[neighbor] > /*openList[currNode]*/ + currNode.GetComponent<Node>().GetCost()){ // curr node not in open list
+                            openList[neighbor] = /*openList[currNode]*/ + currNode.GetComponent<Node>().GetCost();
                         }
                     } else {
                         openList.Add(neighbor, neighbor.GetComponent<Node>().GetCost() + currNode.GetComponent<Node>().GetCost() + neighbor.GetComponent<Node>().GetHeuristic());
