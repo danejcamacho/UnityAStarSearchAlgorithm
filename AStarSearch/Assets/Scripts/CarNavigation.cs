@@ -51,10 +51,6 @@ public class CarNavigation : MonoBehaviour
             navIdx++;
             ChangeNode(closedList[navIdx]);
         }
-
-
-
-
     }
 
     private void AStarSearch(){

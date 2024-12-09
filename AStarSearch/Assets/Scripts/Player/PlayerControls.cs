@@ -10,6 +10,8 @@ public class PlayerControls : MonoBehaviour
     private float breakingForce = 300f;
     [SerializeField]
     private float maxTurnAngle = 15f;
+    [SerializeField]
+    private float maxSpeed = 100;
 
     private float currentAcceleration = 0f;
     private float currentBrakingForce = 0f;
@@ -36,17 +38,24 @@ public class PlayerControls : MonoBehaviour
         inputActions.Disable();
     }
 
-    private void FixedUpdate() {
+    void Update() {
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         currentTurnAngle = maxTurnAngle * moveInput.x;
         currentAcceleration = acceleration * moveInput.y;
+        if (rb.linearVelocity.magnitude >= maxSpeed) currentAcceleration = 0f;
         currentBrakingForce = (inputActions.Player.Break.ReadValue<float>() > 0f) ? currentBrakingForce = breakingForce : 0f;
+    }
+
+    private void FixedUpdate() {
+        
 
         // accelerate
-        // wheels[0].motorTorque = currentAcceleration;
-        // wheels[1].motorTorque = currentAcceleration;
+        Debug.Log("Cur speed: " + rb.linearVelocity.magnitude);
+        wheels[0].motorTorque = currentAcceleration;
+        wheels[1].motorTorque = currentAcceleration;
         wheels[2].motorTorque = currentAcceleration;
         wheels[3].motorTorque = currentAcceleration;
+        Debug.Log("Cur motorTorque: " + wheels[0].motorTorque);
 
         // break
         wheels[0].brakeTorque = currentBrakingForce;
