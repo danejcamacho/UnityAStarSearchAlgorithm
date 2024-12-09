@@ -83,9 +83,10 @@ public class CarNavigation : MonoBehaviour
             foreach(GameObject neighbor in currNode.GetComponent<Node>().neighbors) {
                 Debug.Log("Neighbor: " + neighbor);
                 if(!closedList.Contains(neighbor)){
-                    if(openList.ContainsKey(neighbor)){
-                        if(openList[neighbor] > /*openList[currNode] +*/ currNode.GetComponent<Node>().GetCost()){ // problem child // curr node not in open list
-                            openList[neighbor] = /*openList[currNode] +*/ currNode.GetComponent<Node>().GetCost();
+                    // if(openList.ContainsKey(neighbor)){
+                    if(openList.ContainsKey(currNode)){
+                        if(openList[neighbor] > openList[currNode] + currNode.GetComponent<Node>().GetCost()){ // curr node not in open list
+                            openList[neighbor] = openList[currNode] + currNode.GetComponent<Node>().GetCost();
                         }
                     } else {
                         openList.Add(neighbor, neighbor.GetComponent<Node>().GetCost() + currNode.GetComponent<Node>().GetCost() + neighbor.GetComponent<Node>().GetHeuristic());
@@ -93,8 +94,6 @@ public class CarNavigation : MonoBehaviour
                 }
             }
             // Debug.Log("Got past adding neighbors");
-            
-            
             
             //get lowest cost node in the open list,
             //   add it to the closed list,
@@ -110,15 +109,11 @@ public class CarNavigation : MonoBehaviour
             }
 
             //Debug.Log("Lowest Cost Node: " + lowestCostNode);
-
             if (lowestCostNode != null) {
                 closedList.Add(lowestCostNode);
                 openList.Remove(lowestCostNode);
                 currNode = lowestCostNode;
-
-
             }
-
 
             // Check if the current node is the goal node
             if (currNode.CompareTag("Goal")){ {
@@ -128,11 +123,7 @@ public class CarNavigation : MonoBehaviour
         }
         carIsSearching = false;
         }
-
-
-
     }
-
 
     /// <summary>
     /// This function will move the car to the specified node
