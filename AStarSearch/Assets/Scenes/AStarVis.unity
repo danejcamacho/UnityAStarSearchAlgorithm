@@ -874,6 +874,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3604935936171374781, guid: 09f12898a19813743a36ccd32f064d8b, type: 3}
+      propertyPath: carSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604935936171374781, guid: 09f12898a19813743a36ccd32f064d8b, type: 3}
       propertyPath: navNodes
       value: 
       objectReference: {fileID: 786274387}

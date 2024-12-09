@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                Debug.Log(x + ", " + y);
+                // Debug.Log(x + ", " + y);
                 
                 //NOTE: Change this to make the indexes more accurate to where the car should actually start and end up
 

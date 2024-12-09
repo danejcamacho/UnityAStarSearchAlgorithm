@@ -1,4 +1,4 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +8,7 @@ using UnityEngine;
 public class CarNavigation : MonoBehaviour
 {
     public GameObject navNodes;
+    public GameObject goalNode;
     [SerializeField] private float carSpeed = 5;
     private GameObject currNode; // this is for the A* algorithm
 
@@ -31,6 +32,7 @@ public class CarNavigation : MonoBehaviour
     void Start()
     {   
         startNode = GameObject.FindWithTag("Start");
+        goalNode = GameObject.FindWithTag("Goal");
         currNode = startNode;
         currentNode = startNode;
         transform.position = startNode.transform.position;
@@ -40,14 +42,16 @@ public class CarNavigation : MonoBehaviour
         for (int i = 0; i < closedList.Count; i++){
             Debug.Log("Closed List: "+ i + " " + closedList[i]);
         }
-
-        
     }
 
     private void Update() {
 
-        if(Input.GetKeyDown(KeyCode.Z)){
-            Debug.Log("navIdx: " + navIdx);
+        // if(Input.GetKeyDown(KeyCode.Z)){
+        //     Debug.Log("navIdx: " + navIdx);
+        //     navIdx++;
+        //     ChangeNode(closedList[navIdx]);
+        // }
+        if (!carIsMoving && currentNode != goalNode && navIdx < closedList.Count-1) {
             navIdx++;
             ChangeNode(closedList[navIdx]);
         }
@@ -88,6 +92,8 @@ public class CarNavigation : MonoBehaviour
                 }
             }
             Debug.Log("Got past adding neighbors");
+            
+            
             
             //get lowest cost node in the open list,
             //   add it to the closed list,
@@ -148,6 +154,5 @@ public class CarNavigation : MonoBehaviour
 
         currentNode = nodeToTravelTo;
         carIsMoving = false;
-	
     }
 }

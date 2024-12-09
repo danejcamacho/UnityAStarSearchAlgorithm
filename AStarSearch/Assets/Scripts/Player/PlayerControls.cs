@@ -50,12 +50,12 @@ public class PlayerControls : MonoBehaviour
         
 
         // accelerate
-        Debug.Log("Cur speed: " + rb.linearVelocity.magnitude);
+        // Debug.Log("Cur speed: " + rb.linearVelocity.magnitude);
         wheels[0].motorTorque = currentAcceleration;
         wheels[1].motorTorque = currentAcceleration;
         wheels[2].motorTorque = currentAcceleration;
         wheels[3].motorTorque = currentAcceleration;
-        Debug.Log("Cur motorTorque: " + wheels[0].motorTorque);
+        // Debug.Log("Cur motorTorque: " + wheels[0].motorTorque);
 
         // break
         wheels[0].brakeTorque = currentBrakingForce;

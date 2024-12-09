@@ -38,4 +38,9 @@ public class Node : MonoBehaviour
     public float GetCost(){
         return costToTravelToNode;
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (!other.CompareTag("Environment")) return;
+        costToTravelToNode = other.GetComponent<SurfaceCost>().Cost;
+    }
 }
