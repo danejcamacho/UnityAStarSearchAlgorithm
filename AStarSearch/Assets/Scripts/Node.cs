@@ -8,6 +8,7 @@ public class Node : MonoBehaviour
     public GameObject goalNode;
     public List<GameObject> neighbors;
     public float costToTravelToNode = 1;
+    float surfaceCost = 0;
 
     private void Awake(){
         heuristic = Vector3.Distance(goalNode.transform.position, transform.position);
@@ -41,6 +42,6 @@ public class Node : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (!other.CompareTag("Environment")) return;
-        costToTravelToNode = other.GetComponent<SurfaceCost>().Cost;
+        surfaceCost = other.GetComponent<SurfaceCost>().Cost;
     }
 }

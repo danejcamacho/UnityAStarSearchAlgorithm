@@ -79,19 +79,20 @@ public class CarNavigation : MonoBehaviour
             //add all the neighbors of the current node to the open list
             //    if the neighbor is not in the closed list
             //    if the neighbor is in the neighbor list, update the cost if it is less
+            Debug.Log("Curr Node: " + currNode.name);
             foreach(GameObject neighbor in currNode.GetComponent<Node>().neighbors) {
-                //Debug.Log("Neighbor: " + neighbor);
+                Debug.Log("Neighbor: " + neighbor);
                 if(!closedList.Contains(neighbor)){
                     if(openList.ContainsKey(neighbor)){
-                        if(openList[neighbor] > openList[currNode] + currNode.GetComponent<Node>().GetCost()){
-                            openList[neighbor] = openList[currNode] + currNode.GetComponent<Node>().GetCost();
+                        if(openList[neighbor] > /*openList[currNode] +*/ currNode.GetComponent<Node>().GetCost()){ // problem child // curr node not in open list
+                            openList[neighbor] = /*openList[currNode] +*/ currNode.GetComponent<Node>().GetCost();
                         }
                     } else {
                         openList.Add(neighbor, neighbor.GetComponent<Node>().GetCost() + currNode.GetComponent<Node>().GetCost() + neighbor.GetComponent<Node>().GetHeuristic());
                     }
                 }
             }
-            Debug.Log("Got past adding neighbors");
+            // Debug.Log("Got past adding neighbors");
             
             
             
