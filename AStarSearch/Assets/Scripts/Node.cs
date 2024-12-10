@@ -7,15 +7,23 @@ public class Node : MonoBehaviour
     private float heuristic;
     public GameObject goalNode;
     public List<GameObject> neighbors;
-    public float costToTravelToNode = 1;
-    float surfaceCost = 0;
+    [Tooltip("Cost to travel to from adjacent nodes")]
+    public float pathCost = 0;
+    public float costFromStart = 0;
+    private SphereCollider sphereCollider;
+
+    // Modifies the cost based on terrain
+    float surfaceCostMod = 0;
 
     private void Awake(){
+        goalNode = GameObject.FindGameObjectWithTag("Goal");
         heuristic = Vector3.Distance(goalNode.transform.position, transform.position);
     }
+
     void Start(){
         //initialize to avoid error
         goalNode = gameObject;
+        // Debug.Log(gameObject.name + ": " + GetRealPathCost());
     }
 
     void OnDrawGizmos(){
@@ -36,12 +44,16 @@ public class Node : MonoBehaviour
         return heuristic;
     }
 
-    public float GetCost(){
-        return costToTravelToNode;
+    public float GetRealPathCost(){
+        return pathCost * surfaceCostMod;
+    }
+
+    public float GetFinalCost(){
+        return costFromStart + heuristic;
     }
 
     private void OnTriggerEnter(Collider other) {
         if (!other.CompareTag("Environment")) return;
-        surfaceCost = other.GetComponent<SurfaceCost>().Cost;
+        surfaceCostMod = other.GetComponent<SurfaceCost>().Cost;
     }
 }

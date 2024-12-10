@@ -17,7 +17,7 @@ public class NodeCostManager : MonoBehaviour
     GameObject startNode;
     GameObject goalNode;
 
-    List<List<GameObject>> nodes = new();
+    public List<List<GameObject>> nodes {get; private set;} = new();
 
     float gridWidth;
     float gridHeight;
@@ -64,7 +64,9 @@ public class NodeCostManager : MonoBehaviour
             for (int x = 0; x < nodes[y].Count; x++)
             {
                 AddAdjacentNeighbor(x,y);
-                nodes[y][x].GetComponent<Node>().costToTravelToNode = xDistBetweenNodes;
+                if (x == 0 && y == 0) continue;
+                nodes[y][x].GetComponent<Node>().pathCost = xDistBetweenNodes;
+                nodes[y][x].GetComponent<Node>().costFromStart = xDistBetweenNodes;
             }
         }
     }
@@ -72,16 +74,16 @@ public class NodeCostManager : MonoBehaviour
     void AddAdjacentNeighbor(int x, int y) {
         Node node = nodes[y][x].GetComponent<Node>();
         //Top row
-        // if (CheckPosInBounds(x-1,y-1)) node.neighbors.Add(nodes[y-1][x-1]);
+        if (CheckPosInBounds(x-1,y-1)) node.neighbors.Add(nodes[y-1][x-1]);
         if (CheckPosInBounds(x,y-1)) node.neighbors.Add(nodes[y-1][x]);
-        // if (CheckPosInBounds(x+1,y-1)) node.neighbors.Add(nodes[y-1][x+1]);
+        if (CheckPosInBounds(x+1,y-1)) node.neighbors.Add(nodes[y-1][x+1]);
         // Middle row
         if (CheckPosInBounds(x-1,y)) node.neighbors.Add(nodes[y][x-1]);
         if (CheckPosInBounds(x+1,y)) node.neighbors.Add(nodes[y][x+1]);
         // Bot Row
-        // if (CheckPosInBounds(x-1,y+1)) node.neighbors.Add(nodes[y+1][x-1]);
+        if (CheckPosInBounds(x-1,y+1)) node.neighbors.Add(nodes[y+1][x-1]);
         if (CheckPosInBounds(x,y+1)) node.neighbors.Add(nodes[y+1][x]);
-        // if (CheckPosInBounds(x+1,y+1)) node.neighbors.Add(nodes[y+1][x+1]);
+        if (CheckPosInBounds(x+1,y+1)) node.neighbors.Add(nodes[y+1][x+1]);
     }
 
     bool CheckPosInBounds(int x, int y) {

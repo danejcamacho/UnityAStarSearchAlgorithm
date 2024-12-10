@@ -85,11 +85,11 @@ public class CarNavigation : MonoBehaviour
                 if(!closedList.Contains(neighbor)){
                     if(openList.ContainsKey(neighbor)){
                     // if(openList.ContainsKey(currNode)){
-                        if(openList[neighbor] > /*openList[currNode]*/ + currNode.GetComponent<Node>().GetCost()){ // curr node not in open list
-                            openList[neighbor] = /*openList[currNode]*/ + currNode.GetComponent<Node>().GetCost();
+                        if(openList[neighbor] > /*openList[currNode]*/ + currNode.GetComponent<Node>().GetRealPathCost()){ // curr node not in open list
+                            openList[neighbor] = /*openList[currNode]*/ + currNode.GetComponent<Node>().GetRealPathCost();
                         }
                     } else {
-                        openList.Add(neighbor, neighbor.GetComponent<Node>().GetCost() + currNode.GetComponent<Node>().GetCost() + neighbor.GetComponent<Node>().GetHeuristic());
+                        openList.Add(neighbor, neighbor.GetComponent<Node>().GetRealPathCost() + currNode.GetComponent<Node>().GetRealPathCost() + neighbor.GetComponent<Node>().GetHeuristic());
                     }
                 }
             }
