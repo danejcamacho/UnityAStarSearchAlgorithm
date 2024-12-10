@@ -33,9 +33,6 @@ public class Node : MonoBehaviour
         }
     }
 
-    void Update(){
-
-    }
     /// <summary>
     /// This is the getter for the heuristic value of the node. The Euclidean Distance is used for this.
     /// </summary>

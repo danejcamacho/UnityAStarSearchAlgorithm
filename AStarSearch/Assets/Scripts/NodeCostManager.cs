@@ -66,14 +66,29 @@ public class NodeCostManager : MonoBehaviour
                 AddAdjacentNeighbor(x,y);
                 if (x == 0 && y == 0) continue;
                 nodes[y][x].GetComponent<Node>().pathCost = xDistBetweenNodes;
-                nodes[y][x].GetComponent<Node>().costFromStart = xDistBetweenNodes;
+                nodes[y][x].GetComponent<Node>().costFromStart = 0f;
             }
         }
     }
 
+    int coinFlip = 1;
     void AddAdjacentNeighbor(int x, int y) {
         Node node = nodes[y][x].GetComponent<Node>();
+        // Diagonally Adjacent
         //Top row
+        // if (CheckPosInBounds(x-1,y-1)) node.neighbors.Add(nodes[y-1][x-1]);
+        // if (CheckPosInBounds(x,y-1)) node.neighbors.Add(nodes[y-1][x]);
+        // // if (CheckPosInBounds(x+1,y-1)) node.neighbors.Add(nodes[y-1][x+1]);
+        // // Middle row
+        // if (CheckPosInBounds(x-1,y)) node.neighbors.Add(nodes[y][x-1]);
+        // if (CheckPosInBounds(x+1,y)) node.neighbors.Add(nodes[y][x+1]);
+        // // Bot Row
+        // // if (CheckPosInBounds(x-1,y+1)) node.neighbors.Add(nodes[y+1][x-1]);
+        // if (CheckPosInBounds(x,y+1)) node.neighbors.Add(nodes[y+1][x]);
+        // // if (CheckPosInBounds(x+1,y+1)) node.neighbors.Add(nodes[y+1][x+1]);
+
+        // // Diagonally Adjacent
+        // //Top row
         if (CheckPosInBounds(x-1,y-1)) node.neighbors.Add(nodes[y-1][x-1]);
         if (CheckPosInBounds(x,y-1)) node.neighbors.Add(nodes[y-1][x]);
         if (CheckPosInBounds(x+1,y-1)) node.neighbors.Add(nodes[y-1][x+1]);
@@ -84,6 +99,20 @@ public class NodeCostManager : MonoBehaviour
         if (CheckPosInBounds(x-1,y+1)) node.neighbors.Add(nodes[y+1][x-1]);
         if (CheckPosInBounds(x,y+1)) node.neighbors.Add(nodes[y+1][x]);
         if (CheckPosInBounds(x+1,y+1)) node.neighbors.Add(nodes[y+1][x+1]);
+
+        // //Top row
+
+        // if (coinFlip % 3 == 0 && CheckPosInBounds(x-1,y-1)) node.neighbors.Add(nodes[y-1][x-1]);
+        // if (coinFlip % 3 == 1 && CheckPosInBounds(x,y-1)) node.neighbors.Add(nodes[y-1][x]);
+        // if (coinFlip % 3 == 0 && CheckPosInBounds(x+1,y-1)) node.neighbors.Add(nodes[y-1][x+1]);
+        // // Middle row
+        // if (CheckPosInBounds(x-1,y)) node.neighbors.Add(nodes[y][x-1]);
+        // if (CheckPosInBounds(x+1,y)) node.neighbors.Add(nodes[y][x+1]);
+        // // Bot Row
+        // if (coinFlip % 3 == 1 && CheckPosInBounds(x-1,y+1)) node.neighbors.Add(nodes[y+1][x-1]);
+        // if (coinFlip % 3 == 2 && CheckPosInBounds(x,y+1)) node.neighbors.Add(nodes[y+1][x]);
+        // if (coinFlip % 3 == 0 && CheckPosInBounds(x+1,y+1)) node.neighbors.Add(nodes[y+1][x+1]);
+        coinFlip++;
     }
 
     bool CheckPosInBounds(int x, int y) {

@@ -18,6 +18,8 @@ public class AStar : MonoBehaviour
     bool carIsMoving = false;
     int navIdx = 0;
 
+    float timer = 0;
+
     private void Start() {
         foreach (var row in NodeManager.nodes)
         {
@@ -34,9 +36,11 @@ public class AStar : MonoBehaviour
     }
 
     private void Update() {
+        timer += Time.deltaTime;
         if (!carIsMoving && navIdx < explored.Count-1) {
             navIdx++;
             ChangeNode(explored[navIdx].gameObject);
+            Debug.Log("Timer: " + timer);
         }
     }
 
@@ -45,7 +49,7 @@ public class AStar : MonoBehaviour
         while(true) {
             if (frontier.GetCount() == 0) return false;
             Node currentNode = frontier.Dequeue();
-            if(currentNode == nodes[nodes.Count-1]) {
+            if(currentNode == nodes[^1]) {
                 explored.Add(currentNode);
                 return true;
             }
@@ -53,7 +57,7 @@ public class AStar : MonoBehaviour
             foreach (var neighbor in currentNode.neighbors)
             {
                 Node neighborNode = neighbor.GetComponent<Node>();
-                neighborNode.costFromStart = currentNode.costFromStart + neighborNode.GetRealPathCost();
+                // if(!explored.Contains(neighborNode)) neighborNode.costFromStart = currentNode.costFromStart + neighborNode.GetRealPathCost();
                 if (!frontier.p_queue.Contains(neighborNode) && !explored.Contains(neighborNode)) {
                     frontier.Enqueue(neighborNode);
                 }
@@ -67,7 +71,7 @@ public class AStar : MonoBehaviour
 
     public void ChangeNode(GameObject nodeToTravelTo){
         if(!carIsMoving){
-            Debug.Log("Going to node: " + nodeToTravelTo.name + " pathCost: " + nodeToTravelTo.GetComponent<Node>().GetRealPathCost());
+            Debug.Log("Going to node: " + nodeToTravelTo.name + " Final Cost: " + nodeToTravelTo.GetComponent<Node>().GetFinalCost());
             StartCoroutine(TravelToNode(nodeToTravelTo));
         }
     }
@@ -83,6 +87,9 @@ public class AStar : MonoBehaviour
 
         currentNodeObj = nodeToTravelTo;
         carIsMoving = false;
+        if (navIdx >= explored.Count) {
+            Debug.Log("Timer: " + timer);
+        }
     }
 }
 
@@ -112,7 +119,6 @@ public class PriorityQueue {
             return (x.costFromStart+x.GetHeuristic()).CompareTo(y.costFromStart+y.GetHeuristic());
         }
     }
-
 }
 
 
